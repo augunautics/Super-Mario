@@ -1,10 +1,13 @@
 // Ground.js
 // Begin Ground.js
 
-// import Ground from "./Ground.js";
-
 export default class Ground {
-    constructor({}) {}
+    constructor({ x, y, width, height }) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
 }
 
 // End Ground.js

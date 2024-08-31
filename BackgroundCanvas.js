@@ -25,12 +25,12 @@ export default class BackgroundCanvas {
     drawBackground(image) {
         if (this.context) {
             // Get the width and height from the image, adjusted by aspect ratio
-            const width = image.width * this.aspectRatio * 2 + this.aspect;
+            const width = image.width * this.aspectRatio * 2 + this.border* this.aspectRatio;
             const height = image.height * this.aspectRatio ;
     
             // Resize the canvas
             this.canvas.width = width;
-            this.canvas.height = height+ (this.border+4 )* 2 //fix offset of world image
+            this.canvas.height = height - (this.spriteSize *this.aspectRatio);
     
             // Draw the background at (0, 0)
             this.context.fillStyle = 'black';

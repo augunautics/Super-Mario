@@ -9,6 +9,7 @@ export default class WorldCanvas {
         this.context = this.canvas.getContext('2d');
         this.aspectRatio = Constants.aspectRatio;
         this.borderSize = Constants.borderSize;
+        this.spriteSize = Constants.spriteSize;
 
         this.positionCanvas();
     }
@@ -23,7 +24,7 @@ export default class WorldCanvas {
 
 
             // Crop the image to half its height minus spriteSize pixels
-            this.croppedHeight = this.image.height / 2 - this.aspectRatio;
+            this.croppedHeight = this.image.height / 2 - this.spriteSize;
             this.croppedWidth = this.image.width;
     
             // Scale the cropped height and the original width to fill the world canvas
@@ -32,7 +33,7 @@ export default class WorldCanvas {
 
 
             this.canvas.width = this.scaledWidth;
-            this.canvas.height = this.scaledHeight * 2;
+            this.canvas.height = this.scaledHeight;
 
 
             this.context.drawImage(
