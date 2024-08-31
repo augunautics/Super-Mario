@@ -2,7 +2,7 @@
 // Begin main.js
 
 import ImageLoader from './ImageLoader.js';
-import BackgroundCanvas from './BackgroundCanvas.js';
+import GameConfig from './GameConfig.js';
 
 // Load images with promises
 Promise.all([
@@ -12,9 +12,11 @@ Promise.all([
 .then(([worldImage, marioImage]) => {
     // Log after images are loaded
     console.log('Images loaded successfully:', worldImage, marioImage);
-    // Instantiate BackgroundCanvas and draw the background image
-    const backgroundCanvas = new BackgroundCanvas({ canvasId: 'backgroundCanvas' });
-    backgroundCanvas.drawBackground()
+    
+    // Instantiate GameConfig and initialize it
+    const gameConfig = new GameConfig({});
+    gameConfig.init();
+
     // You can now use worldImage and marioImage for further operations
 })
 .catch((error) => {
