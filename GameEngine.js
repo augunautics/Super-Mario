@@ -1,12 +1,11 @@
 // GameEngine.js
 // Begin GameEngine.js
 
-import Constants from "./Constants.js";
-
 export default class GameEngine {
-    constructor({ groundObjects, worldCanvas }) {
+    constructor({ groundObjects, worldCanvas, mario }) {
         this.groundObjects = groundObjects;
         this.worldCanvas = worldCanvas;
+        this.mario = mario;
     }
 
     start() {
@@ -20,6 +19,11 @@ export default class GameEngine {
         // Draw the ground objects
         for (const ground of this.groundObjects) {
             ground.draw(context);
+        }
+
+        // Draw Mario after drawing the ground objects
+        if (this.mario) {
+            this.mario.draw(context);
         }
     }
 }

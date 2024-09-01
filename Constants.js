@@ -9,6 +9,7 @@ export default class Constants {
     static aspectRatio = 3;
     static spriteSize = 16;
     static borderSize = 16;
+    static startLocation = 200;
 }
 
 // End Constants.js
