@@ -17,18 +17,17 @@ export default class Ground {
         // Aspect ratio and border are derived from Constants
         this.aspectRatio = Constants.aspectRatio;
         this.border = Constants.borderSize;
+        this.x = this.x * this.aspectRatio + this.border;
+        this.y = this.y * this.aspectRatio + this.height;
+        
+        this.width = this.width * this.aspectRatio;
+        this.height = this.height * this.aspectRatio;
     }
 
     draw(context) {
         context.strokeStyle = this.strokeStyle;
         context.lineWidth = this.lineWidth;
-
-        const x = this.x * this.aspectRatio + this.border;
-        const y = this.y * this.aspectRatio + this.height;
-        const width = this.width * this.aspectRatio;
-        const height = this.height * this.aspectRatio;
-
-        context.strokeRect(x, y, width, height);
+        context.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
 
