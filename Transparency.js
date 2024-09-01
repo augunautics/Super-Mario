@@ -1,13 +1,16 @@
 import Constants from "./Constants.js";
 export default class Transparency {
-    constructor({ image, sourceX, sourceY, worldCanvas }) {
+    constructor({ image, sourceX, sourceY, worldCanvas, color }) {
         this.image = image;
         this.spriteSize = Constants.spriteSize;
         this.sourceX = sourceX;
         this.sourceY = sourceY;
         this.worldCanvas = worldCanvas;
-        this.imageCtx = this.worldCanvas.context; // Assuming worldCanvas.context is the correct context
+        this.context = this.worldCanvas.context; // Assuming worldCanvas.context is the correct context
+        this.color = color,
         this.transparentColor = this.getTransparentColor();
+        this.debug = Constants.debug;
+        this.lineWidth = 2;
     }
 
     getTransparentColor() {
@@ -55,18 +58,15 @@ export default class Transparency {
     }
 
     renderToCanvas(destX, destY, destWidth, destHeight) {
-        // Clear the canvas before drawing
-        this.imageCtx.clearRect(0, 0, this.imageCtx.canvas.width, this.imageCtx.canvas.height);
-
-        // Redraw the entire background before drawing Mario
-        this.worldCanvas.draw();
-
+        // Clear the previous position of Mario if necessary
+        // Optionally: this.context.clearRect(previousX, previousY, destWidth, destHeight);
+    
         const offScreenCanvas = document.createElement('canvas');
         const offScreenCtx = offScreenCanvas.getContext('2d');
-
+    
         offScreenCanvas.width = this.spriteSize;
         offScreenCanvas.height = this.spriteSize;
-
+    
         // Draw Mario's sprite on the off-screen canvas
         offScreenCtx.drawImage(
             this.image,
@@ -75,23 +75,30 @@ export default class Transparency {
             0, 0,
             this.spriteSize, this.spriteSize
         );
-
+    
         // Get the image data
         let imageData = offScreenCtx.getImageData(0, 0, this.spriteSize, this.spriteSize);
-
+    
         // Apply transparency to the image data
         imageData = this.applyTransparency(imageData);
-
+    
         // Put the modified image data back to the off-screen canvas
         offScreenCtx.putImageData(imageData, 0, 0);
-
+    
         // Draw the modified image data onto the main canvas
-        this.imageCtx.drawImage(
+        this.context.drawImage(
             offScreenCanvas,
             0, 0,
             this.spriteSize, this.spriteSize,
             destX, destY,
             destWidth, destHeight
         );
+    
+        // Draw the border around the image
+        if (this.debug) {
+            this.context.strokeStyle = this.color;
+            this.context.lineWidth = this.lineWidth;
+            this.context.strokeRect(destX, destY, destWidth, destHeight);
+        }
     }
-}
+    }

@@ -13,8 +13,9 @@ export default class JsonLoader {
         return response.json();
     }
 
-    static loadGroundObjectsFromJSON(jsonData) {
+    static loadGroundObjectsFromJSON({jsonData,context}) {
         const groundObjects = [];
+        this.context = context;
 
         const layers = jsonData.layers || [];
         layers.forEach(layer => {
@@ -26,6 +27,7 @@ export default class JsonLoader {
                         y: obj.y,
                         width: obj.width,
                         height: obj.height,
+                        context: this.context
                     }));
                 });
             }

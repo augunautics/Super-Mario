@@ -29,7 +29,7 @@ export default class GameConfig {
        
 
         // Load ground objects from JSON data
-        this.groundObjects = JsonLoader.loadGroundObjectsFromJSON(this.jsonData);
+        this.groundObjects = JsonLoader.loadGroundObjectsFromJSON({jsonData:this.jsonData,context:this.worldCanvas.context});
         console.log('Ground objects:', this.groundObjects);
 
         // Create a Mario instance at position (0, 0) with width 50 and height 50
@@ -42,7 +42,8 @@ export default class GameConfig {
             width: this.scaledSprite,
             height: this.scaledSprite,
             image: this.marioImage,
-            context: this.worldCanvas.context,
+            worldCanvas: this.worldCanvas,
+            color:'green',
             crop: { x: 0, y: this.labelOffset, width:this.spriteSize , height: this.spriteSize } // Cropping parameters
         });
 

@@ -11,6 +11,7 @@ export default class Constants {
     static borderSize = 16;
     static startLocation = 200;
     static gravity = 5;
+    static debug = true;
 }
 
 // End Constants.js

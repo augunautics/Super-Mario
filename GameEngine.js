@@ -11,14 +11,7 @@ export default class GameEngine {
         this.gravity = Constants.gravity;
         this.isRunning = false;
 
-        // Initialize Transparency for Mario
-        this.transparency = new Transparency({
-            image: mario.image, 
-            sourceX: mario.crop.x, 
-            sourceY: mario.crop.y, 
-            worldCanvas: this.worldCanvas
-        });
-        
+
     }
 
     start() {
@@ -112,13 +105,15 @@ export default class GameEngine {
         const context = this.worldCanvas.context;
         // Draw Mario after drawing the ground objects
         if (this.mario) {
-            //this.transparency.renderToCanvas(this.mario.x, this.mario.y, this.mario.width, this.mario.height);
-            this.mario.draw();
+            this.mario.renderToCanvas(this.mario.x, this.mario.y, this.mario.width, this.mario.height);
+            //this.mario.draw();
         }
-         // Draw the ground objects
-         for (const ground of this.groundObjects) {
+        // Draw the ground objects
+        for (const ground of this.groundObjects) {
             ground.draw();
         }
+        
+        //this.worldCanvas.draw();
     }
 }
 
