@@ -42,6 +42,7 @@ export default class GameConfig {
             width: this.scaledSprite,
             height: this.scaledSprite,
             image: this.marioImage,
+            context: this.worldCanvas.context,
             crop: { x: 0, y: this.labelOffset, width:this.spriteSize , height: this.spriteSize } // Cropping parameters
         });
 

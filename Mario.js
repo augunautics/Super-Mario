@@ -2,7 +2,7 @@
 // Begin Mario.js
 
 export default class Mario {
-    constructor({ x, y, width, height, image, crop }) {
+    constructor({image, x, y, width, height,crop, context}) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -10,12 +10,13 @@ export default class Mario {
         this.image = image;  // Mario's image
         this.color = 'red';   // Mario's color for the border
         this.lineWidth = 2;   // Width of the border
+        this.context = context;
 
         // Cropping parameters
         this.crop = crop;  // Optional crop parameter
     }
 
-    draw(context) {
+    draw() {
         if (!context || !this.image) {
             console.error('Canvas context or image not found for drawing Mario');
             return;

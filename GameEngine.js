@@ -1,6 +1,7 @@
 // GameEngine.js
 // Begin GameEngine.js
 import Constants from "./Constants.js";
+import Transparency from './Transparency.js';
 
 export default class GameEngine {
     constructor({ groundObjects, worldCanvas, mario }) {
@@ -9,6 +10,15 @@ export default class GameEngine {
         this.mario = mario;
         this.gravity = Constants.gravity;
         this.isRunning = false;
+
+        // Initialize Transparency for Mario
+        this.transparency = new Transparency({
+            image: mario.image, 
+            sourceX: mario.crop.x, 
+            sourceY: mario.crop.y, 
+            worldCanvas: this.worldCanvas
+        });
+        
     }
 
     start() {
@@ -100,15 +110,14 @@ export default class GameEngine {
         this.worldCanvas.draw();
 
         const context = this.worldCanvas.context;
-
-        // Draw the ground objects
-        for (const ground of this.groundObjects) {
-            ground.draw(context);
-        }
-
         // Draw Mario after drawing the ground objects
         if (this.mario) {
-            this.mario.draw(context);
+            //this.transparency.renderToCanvas(this.mario.x, this.mario.y, this.mario.width, this.mario.height);
+            this.mario.draw();
+        }
+         // Draw the ground objects
+         for (const ground of this.groundObjects) {
+            ground.draw();
         }
     }
 }
