@@ -4,7 +4,6 @@
 import ImageLoader from './ImageLoader.js';
 import GameConfig from './GameConfig.js';
 import JsonLoader from './JsonLoader.js';
-import GameEngine from './GameEngine.js';
 
 // Load images and JSON data with promises
 Promise.all([
@@ -20,14 +19,9 @@ Promise.all([
     const gameConfig = new GameConfig({ worldImage, marioImage, jsonData });
     gameConfig.init();
 
-    // Instantiate GameEngine with groundObjects and worldCanvas
-    const gameEngine = new GameEngine({ 
-        groundObjects: gameConfig.groundObjects, 
-        worldCanvas: gameConfig.worldCanvas 
-    });
-
-    // Draw the ground objects
-    gameEngine.drawGround();
+    // Get the GameEngine instance and start the game
+    const gameEngine = gameConfig.getGameEngine();
+    gameEngine.start();
 })
 .catch((error) => {
     console.error('Error loading resources:', error);

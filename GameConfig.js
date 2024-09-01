@@ -4,6 +4,7 @@
 import BackgroundCanvas from './BackgroundCanvas.js';
 import WorldCanvas from './WorldCanvas.js';
 import JsonLoader from './JsonLoader.js';
+import GameEngine from './GameEngine.js';
 
 export default class GameConfig {
     constructor({ worldImage, marioImage, jsonData }) {
@@ -13,22 +14,31 @@ export default class GameConfig {
         this.backgroundCanvas = null;
         this.worldCanvas = null;
         this.groundObjects = [];
+        this.gameEngine = null;
     }
 
     init() {
         // Initialize the background canvas
-        this.backgroundCanvas = new BackgroundCanvas({ canvasId: 'backgroundCanvas' });
-        this.backgroundCanvas.drawBackground(this.worldImage);
+        this.backgroundCanvas = new BackgroundCanvas({ canvasId: 'backgroundCanvas', image: this.worldImage });
+        this.backgroundCanvas.draw();
 
         // Initialize the world canvas and draw the world image on top of the background
-        this.worldCanvas = new WorldCanvas({ canvasId: 'worldCanvas' });
-        this.worldCanvas.drawWorld(this.worldImage);
+        this.worldCanvas = new WorldCanvas({ canvasId: 'worldCanvas', image: this.worldImage });
+        this.worldCanvas.draw();
 
         // Load ground objects from JSON data
         this.groundObjects = JsonLoader.loadGroundObjectsFromJSON(this.jsonData);
         console.log('Ground objects:', this.groundObjects);
 
-        // You can now use groundObjects for further operations, e.g., collision detection
+        // Initialize GameEngine with groundObjects and worldCanvas
+        this.gameEngine = new GameEngine({
+            groundObjects: this.groundObjects,
+            worldCanvas: this.worldCanvas
+        });
+    }
+
+    getGameEngine() {
+        return this.gameEngine;
     }
 }
 

@@ -6,7 +6,7 @@
 export default class Constants {
     constructor({}) {}
 
-    static aspectRatio = 2;
+    static aspectRatio = 4;
     static spriteSize = 16;
     static borderSize = 16;
 }

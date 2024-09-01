@@ -9,30 +9,19 @@ export default class GameEngine {
         this.worldCanvas = worldCanvas;
     }
 
-    drawGround() {
+    start() {
         if (!this.worldCanvas || !this.worldCanvas.context) {
             console.error('World canvas or context not found');
             return;
         }
-    
+
         const context = this.worldCanvas.context;
-        context.strokeStyle = 'red';
-        context.lineWidth = 2; // Adjust the thickness of the border if needed
-    
-        const aspectRatio = Constants.aspectRatio * 2;
-        const border = Constants.borderSize;
-    
+
+        // Draw the ground objects
         for (const ground of this.groundObjects) {
-            const x = ground.x * aspectRatio + border;
-            const y = ground.y * aspectRatio + ground.height;
-            const width = ground.width * aspectRatio;
-            const height = ground.height * aspectRatio;
-    
-            context.strokeRect(x, y, width, height);
+            ground.draw(context);
         }
     }
-    
-    
 }
 
 // End GameEngine.js
