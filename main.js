@@ -2,23 +2,28 @@
 // Begin main.js
 
 import ImageLoader from './ImageLoader.js';
-import BackgroundCanvas from './BackgroundCanvas.js';
+import GameConfig from './GameConfig.js';
+import JsonLoader from './JsonLoader.js';
 
-// Load images with promises
+// Load images and JSON data with promises
 Promise.all([
     ImageLoader.loadImage('world1-1.png'),  // Background image
-    ImageLoader.loadImage('mario.png')      // Mario image
+    ImageLoader.loadImage('mario.png'),     // Mario image
+    JsonLoader.loadJSON('world1-1.json')   // JSON file with ground objects
 ])
-.then(([worldImage, marioImage]) => {
-    // Log after images are loaded
-    console.log('Images loaded successfully:', worldImage, marioImage);
-    // Instantiate BackgroundCanvas and draw the background image
-    const backgroundCanvas = new BackgroundCanvas({ canvasId: 'backgroundCanvas' });
-    backgroundCanvas.drawBackground()
-    // You can now use worldImage and marioImage for further operations
+.then(([worldImage, marioImage, jsonData]) => {
+    // Log after images and JSON data are loaded
+    console.log('Images and JSON data loaded successfully:', worldImage, marioImage, jsonData);
+
+    // Instantiate GameConfig and automatically initialize it with images and JSON data
+    const gameConfig = new GameConfig({ worldImage, marioImage, jsonData });
+
+    // Get the GameEngine instance and start the game
+    const gameEngine = gameConfig.getGameEngine();
+    gameEngine.start();
 })
 .catch((error) => {
-    console.error('Error loading images:', error);
+    console.error('Error loading resources:', error);
 });
 
 // End main.js
