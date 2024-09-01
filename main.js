@@ -9,15 +9,14 @@ import JsonLoader from './JsonLoader.js';
 Promise.all([
     ImageLoader.loadImage('world1-1.png'),  // Background image
     ImageLoader.loadImage('mario.png'),     // Mario image
-    JsonLoader.loadJSON('levelData.json')   // JSON file with ground objects
+    JsonLoader.loadJSON('world1-1.json')   // JSON file with ground objects
 ])
 .then(([worldImage, marioImage, jsonData]) => {
     // Log after images and JSON data are loaded
     console.log('Images and JSON data loaded successfully:', worldImage, marioImage, jsonData);
 
-    // Instantiate GameConfig and initialize it with images and JSON data
+    // Instantiate GameConfig and automatically initialize it with images and JSON data
     const gameConfig = new GameConfig({ worldImage, marioImage, jsonData });
-    gameConfig.init();
 
     // Get the GameEngine instance and start the game
     const gameEngine = gameConfig.getGameEngine();
