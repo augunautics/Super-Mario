@@ -6,6 +6,7 @@ import JsonLoader from './JsonLoader.js';
 import GameEngine from './GameEngine.js';
 import Mario from './Mario.js';
 import Constants from "./Constants.js"; 
+import EventHandler from "./EventHandler.js"; 
 
 export default class GameConfig {
     constructor({ worldImage, marioImage, jsonData }) {
@@ -36,7 +37,7 @@ export default class GameConfig {
         this.scaledSprite = this.spriteSize*this.aspectRadio;
         this.labelOffset = 8;
 
-        const mario = new Mario({
+        this.mario = new Mario({
             x: this.startLocation,
             y: this.startLocation,
             width: this.scaledSprite,
@@ -47,14 +48,19 @@ export default class GameConfig {
             crop: { x: 0, y: this.labelOffset, width:this.spriteSize , height: this.spriteSize } // Cropping parameters
         });
 
-        
+       
+         // Initialize the EventHandler to handle Mario's movements
+         this.eventHandler = new EventHandler({ mario: this.mario, gameEngine: this.gameEngine });
 
         // Initialize GameEngine with groundObjects, worldCanvas, and Mario
         this.gameEngine = new GameEngine({
             groundObjects: this.groundObjects,
             worldCanvas: this.worldCanvas,
-            mario: mario
+            mario: this.mario,
+            eventHandler: this.eventHandler
         });
+
+       
     }
 
     getGameEngine() {
